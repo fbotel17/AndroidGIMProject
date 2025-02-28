@@ -12,4 +12,10 @@
         android:text="Bonjour, bienvenue dans l'application GIM!"
         android:textSize="18sp" />
 
+    <Button
+        android:id="@+id/buttonToSearchMedic"
+        android:layout_width="233dp"
+        android:layout_height="74dp"
+        android:text="Rechercher un médicament" />
+
 </LinearLayout>
