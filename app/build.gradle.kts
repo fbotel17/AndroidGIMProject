@@ -38,6 +38,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0") // Mise à jour avec la syntaxe correcte
     implementation("com.squareup.retrofit2:converter-gson:2.9.0") // idem
     implementation("com.squareup.okhttp3:okhttp:4.9.0") // idem
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

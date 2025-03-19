@@ -12,7 +12,7 @@ public class GimActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gim);
 
-        // Récupération du bouton
+        // Récupération du bouton pour rechercher un médicament
         Button buttonToSearchMedic = findViewById(R.id.buttonToSearchMedic);
 
         // Ajout du listener pour gérer le clic
@@ -24,5 +24,19 @@ public class GimActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Ajout du bouton pour démarrer le scanner
+        // Ajout du bouton pour démarrer le scanner
+        Button buttonToScan = findViewById(R.id.buttonToScan);
+
+        buttonToScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Création de l'intent pour naviguer vers ScanActivity
+                Intent intent = new Intent(GimActivity.this, ScanActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

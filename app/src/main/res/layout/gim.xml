@@ -18,4 +18,10 @@
         android:layout_height="74dp"
         android:text="Rechercher un médicament" />
 
+    <Button
+        android:id="@+id/buttonToScan"
+        android:layout_width="233dp"
+        android:layout_height="74dp"
+        android:text="Scanner un médicament" />
+
 </LinearLayout>
