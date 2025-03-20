@@ -24,8 +24,8 @@
             android:name=".GimActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action" />
+                <category android:name="android.intent.category" />
             </intent-filter>
 
         </activity>
@@ -44,6 +44,14 @@
             <intent-filter>
                 <action android:name="android.intent.action" />
                 <category android:name="android.intent.category" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>

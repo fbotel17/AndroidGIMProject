@@ -3,6 +3,8 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">gim.faustbtl.site</domain>
         <domain includeSubdomains="true">192.168.1.49</domain>
+        <domain includeSubdomains="true">10.3.129.109</domain>
+
 
     </domain-config>
 </network-security-config>

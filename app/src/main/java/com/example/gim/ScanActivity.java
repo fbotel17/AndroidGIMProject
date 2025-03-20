@@ -1,5 +1,6 @@
 package com.example.gim;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -20,15 +21,15 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.json.JSONObject;
-import android.widget.EditText; // Pour EditText
-import android.text.InputType; // Pour InputType
-import android.app.AlertDialog; // Pour AlertDialog
-import android.widget.Toast; // Pour afficher un message de toast si besoin
-
+import android.widget.EditText;
+import android.text.InputType;
+import android.app.AlertDialog;
+import android.widget.Toast;
 
 public class ScanActivity extends AppCompatActivity {
     private TextView textViewResult;
     private OkHttpClient httpClient;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +37,13 @@ public class ScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan);
 
         textViewResult = findViewById(R.id.textViewResult);
+        sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+
         httpClient = new OkHttpClient.Builder()
                 .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                 .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                 .writeTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                 .build();
-
 
         // Initialiser le scanner pour lire les codes Datamatrix
         IntentIntegrator integrator = new IntentIntegrator(this);
@@ -104,8 +106,6 @@ public class ScanActivity extends AppCompatActivity {
                 .show();
     }
 
-
-
     private String extractPCCode(String qrContent) {
         // Utiliser une expression régulière pour trouver le code PC avec exactement 13 chiffres après le "0"
         Pattern pattern = Pattern.compile("034\\d{11}");
@@ -120,17 +120,25 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void sendCodeToAPI(String pcCode, int quantity) {
+        // Récupérer l'ID de l'utilisateur
+        int userId = sharedPreferences.getInt("userId", -1);
+        if (userId == -1) {
+            textViewResult.setText("ID utilisateur non trouvé.");
+            return;
+        }
+
         // Construire le JSON à envoyer
         JSONObject json = new JSONObject();
         try {
             json.put("cip13", pcCode);
-            json.put("quantity", quantity);  // Ajoute la quantité au JSON
+            json.put("quantity", quantity);
+            json.put("userId", userId);  // Ajouter l'ID de l'utilisateur au JSON
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // URL de l'API
-        String apiUrl = "http://192.168.1.49:99/api/ajouter-medicament";
+        String apiUrl = "http://10.3.129.109:99/api/ajouter-medicament";
 
         // Construire la requête
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json.toString());
@@ -162,5 +170,4 @@ public class ScanActivity extends AppCompatActivity {
             }
         });
     }
-
 }
