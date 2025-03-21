@@ -42,6 +42,8 @@ dependencies {
     implementation ("com.google.zxing:core:3.4.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    implementation ("androidx.cardview:cardview:1.0.0")
 
 
 

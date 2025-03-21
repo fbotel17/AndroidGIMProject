@@ -26,7 +26,6 @@ public class GimActivity extends AppCompatActivity {
         });
 
         // Ajout du bouton pour démarrer le scanner
-        // Ajout du bouton pour démarrer le scanner
         Button buttonToScan = findViewById(R.id.buttonToScan);
 
         buttonToScan.setOnClickListener(new View.OnClickListener() {
@@ -38,5 +37,16 @@ public class GimActivity extends AppCompatActivity {
             }
         });
 
+        // Ajout du bouton pour accéder à l'inventaire
+        Button buttonToInventaire = findViewById(R.id.buttonToInventaire);
+
+        buttonToInventaire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Création de l'intent pour naviguer vers InventaireActivity
+                Intent intent = new Intent(GimActivity.this, InventaireActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
