@@ -47,6 +47,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        TextView textViewRegister = findViewById(R.id.textViewRegister);
+        textViewRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void login(String identifier, String password) {
