@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(json.toString(), MediaType.get("application/json; charset=utf-8"));
 
         Request request = new Request.Builder()
-                .url("http://10.3.129.109:99/api/login")
+                .url("http://192.168.1.49:99/api/login")
                 .post(body)
                 .build();
 
@@ -86,11 +86,11 @@ public class LoginActivity extends AppCompatActivity {
                     String responseData = response.body().string();
                     try {
                         JSONObject jsonResponse = new JSONObject(responseData);
-                        int userId = jsonResponse.getInt("id");
+                        String token = jsonResponse.getString("token");
 
-                        // Stocker l'ID de l'utilisateur
+                        // Stocker le JWT
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt("userId", userId);
+                        editor.putString("jwtToken", token);
                         editor.apply();
 
                         // Rediriger vers GimActivity
@@ -113,4 +113,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 }

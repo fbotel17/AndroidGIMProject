@@ -7,9 +7,10 @@
         android:id="@+id/textViewResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:text="Résultat du scan"
         android:textSize="18sp"
-        android:padding="16dp"
-        android:text="Contenu du QR Code apparaîtra ici"/>
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"/>
+
 
 </RelativeLayout>

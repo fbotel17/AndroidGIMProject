@@ -120,10 +120,10 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void sendCodeToAPI(String pcCode, int quantity) {
-        // Récupérer l'ID de l'utilisateur
-        int userId = sharedPreferences.getInt("userId", -1);
-        if (userId == -1) {
-            textViewResult.setText("ID utilisateur non trouvé.");
+        // Récupérer le JWT
+        String token = sharedPreferences.getString("jwtToken", null);
+        if (token == null) {
+            textViewResult.setText("Token non trouvé.");
             return;
         }
 
@@ -132,21 +132,20 @@ public class ScanActivity extends AppCompatActivity {
         try {
             json.put("cip13", pcCode);
             json.put("quantity", quantity);
-            json.put("userId", userId);  // Ajouter l'ID de l'utilisateur au JSON
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // URL de l'API
-        String apiUrl = "http://10.3.129.109:99/api/ajouter-medicament";
+        String apiUrl = "http://192.168.1.49:99/api/ajouter-medicament";
 
         // Construire la requête
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json.toString());
         Request request = new Request.Builder()
                 .url(apiUrl)
                 .post(body)
+                .addHeader("Authorization", "Bearer " + token)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("User-Agent", "Mozilla/5.0 (Linux; Android 10)")
                 .build();
 
         // Envoyer la requête de manière asynchrone
@@ -170,4 +169,5 @@ public class ScanActivity extends AppCompatActivity {
             }
         });
     }
+
 }
