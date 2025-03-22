@@ -4,10 +4,21 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <EditText
+        android:id="@+id/editTextSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Rechercher un médicament"
+        android:inputType="text"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentTop="true" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewInventaire"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/editTextSearch"
         android:layout_above="@id/buttonRefresh" />
 
     <Button

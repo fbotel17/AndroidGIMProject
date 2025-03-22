@@ -18,11 +18,14 @@ import okhttp3.*;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import android.text.TextWatcher;
+import android.text.Editable;
 
 public class InventaireActivity extends AppCompatActivity implements InventaireAdapter.OnQuantityChangeListener {
 
     private RecyclerView recyclerViewInventaire;
     private Button buttonRefresh;
+    private EditText editTextSearch;
     private OkHttpClient client;
     private Gson gson;
     private SharedPreferences sharedPreferences;
@@ -36,6 +39,7 @@ public class InventaireActivity extends AppCompatActivity implements InventaireA
 
         recyclerViewInventaire = findViewById(R.id.recyclerViewInventaire);
         buttonRefresh = findViewById(R.id.buttonRefresh);
+        editTextSearch = findViewById(R.id.editTextSearch);
 
         client = new OkHttpClient();
         gson = new Gson();
@@ -47,6 +51,19 @@ public class InventaireActivity extends AppCompatActivity implements InventaireA
         recyclerViewInventaire.setLayoutManager(new LinearLayoutManager(this));
 
         buttonRefresh.setOnClickListener(v -> fetchInventaire());
+
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchInventaire(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         // Fetch inventaire data when the activity is created
         fetchInventaire();
@@ -93,6 +110,54 @@ public class InventaireActivity extends AppCompatActivity implements InventaireA
             }
         });
     }
+
+    private void searchInventaire(String nom) {
+        if (nom.isEmpty()) {
+            // Si le texte de recherche est vide, récupérer l'inventaire complet
+            fetchInventaire();
+        } else {
+            String token = sharedPreferences.getString("jwtToken", null);
+            if (token == null) {
+                Toast.makeText(InventaireActivity.this, "Token non trouvé.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String url = "http://192.168.1.49:99/api/inventaire/search?nom=" + nom;
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("Authorization", "Bearer " + token)
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "Erreur de connexion: " + e.getMessage());
+                    runOnUiThread(() -> Toast.makeText(InventaireActivity.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        String responseData = response.body().string();
+                        Log.d(TAG, "Response Data: " + responseData);
+                        Type inventaireType = new TypeToken<List<Inventaire>>(){}.getType();
+                        List<Inventaire> inventaireList = gson.fromJson(responseData, inventaireType);
+
+                        runOnUiThread(() -> {
+                            inventaireAdapter = new InventaireAdapter(inventaireList, InventaireActivity.this);
+                            recyclerViewInventaire.setAdapter(inventaireAdapter);
+                        });
+                    } else {
+                        Log.e(TAG, "Erreur de réponse: " + response.code() + " " + response.message());
+                        runOnUiThread(() -> Toast.makeText(InventaireActivity.this, "Erreur lors de la recherche de l'inventaire.", Toast.LENGTH_SHORT).show());
+                    }
+                }
+            });
+        }
+    }
+
 
     @Override
     public void onQuantityChange(int inventaireId, int change) {
