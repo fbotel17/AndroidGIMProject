@@ -137,7 +137,7 @@ public class ScanActivity extends AppCompatActivity {
         }
 
         // URL de l'API
-        String apiUrl = "http://192.168.1.49:99/api/ajouter-medicament";
+        String apiUrl = ApiConfig.BASE_URL + "/api/ajouter-medicament";
 
         // Construire la requête
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json.toString());

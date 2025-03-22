@@ -114,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(json.toString(), MediaType.get("application/json; charset=utf-8"));
 
         Request request = new Request.Builder()
-                .url("http://192.168.1.49:99/api/register")
+                .url(ApiConfig.BASE_URL + "/api/register")
                 .post(body)
                 .build();
 

@@ -76,7 +76,7 @@ public class InventaireActivity extends AppCompatActivity implements InventaireA
             return;
         }
 
-        String url = "http://192.168.1.49:99/api/inventaire";
+        String url = ApiConfig.BASE_URL + "/api/inventaire";
 
         Request request = new Request.Builder()
                 .url(url)
@@ -122,7 +122,7 @@ public class InventaireActivity extends AppCompatActivity implements InventaireA
                 return;
             }
 
-            String url = "http://192.168.1.49:99/api/inventaire/search?nom=" + nom;
+            String url =  ApiConfig.BASE_URL + "/api/inventaire/search?nom=" + nom;
 
             Request request = new Request.Builder()
                     .url(url)
@@ -191,7 +191,7 @@ public class InventaireActivity extends AppCompatActivity implements InventaireA
             return;
         }
 
-        String url = "http://192.168.1.49:99/api/inventaire/" + (quantity > 0 ? "ajouter" : "consommer") + "/" + inventaireId;
+        String url = ApiConfig.BASE_URL + "/api/inventaire/" + (quantity > 0 ? "ajouter" : "consommer") + "/" + inventaireId;
 
         RequestBody formBody = new FormBody.Builder()
                 .add("quantite_" + (quantity > 0 ? "ajoutee" : "consommee"), String.valueOf(Math.abs(quantity)))
