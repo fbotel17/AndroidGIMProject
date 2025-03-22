@@ -6,29 +6,48 @@
     android:layout_margin="8dp"
     android:padding="16dp">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/textViewNomMedicament"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp" />
+            android:text="Nom: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewNombreBoite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Nombre de boîtes: "
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textViewQuantite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Quantité: "
             android:textSize="16sp" />
 
+        <Button
+            android:id="@+id/buttonMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soustraire" />
+
+        <Button
+            android:id="@+id/buttonPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ajouter" />
+
     </LinearLayout>
+
+
+
 </androidx.cardview.widget.CardView>
